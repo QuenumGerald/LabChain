@@ -7,6 +7,8 @@ import (
 	"cosmossdk.io/depinject"
 	"cosmossdk.io/depinject/appconfig"
 	"github.com/cosmos/cosmos-sdk/codec"
+	govkeeper "github.com/cosmos/cosmos-sdk/x/gov/keeper"
+	groupkeeper "github.com/cosmos/cosmos-sdk/x/group/keeper"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
 	"labchain/x/milestones/keeper"
@@ -35,8 +37,8 @@ type ModuleInputs struct {
 
 	AuthKeeper  types.AuthKeeper
 	BankKeeper  types.BankKeeper
-	GovKeeper   types.GovKeeper
-	GroupKeeper types.GroupKeeper
+	GovKeeper   *govkeeper.Keeper
+	GroupKeeper groupkeeper.Keeper
 }
 
 type ModuleOutputs struct {

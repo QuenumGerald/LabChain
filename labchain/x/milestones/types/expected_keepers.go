@@ -7,15 +7,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-type GovKeeper interface {
-	// TODO Add methods imported from gov should be defined here
-}
-
-// GroupKeeper defines the expected interface for the Group module.
-type GroupKeeper interface {
-	GetGroupSequence(context.Context) uint64
-	// Methods imported from account should be defined here
-}
+// Note: Governance keeper is consumed directly as *govkeeper.Keeper by module code.
 
 // AuthKeeper defines the expected interface for the Auth module.
 type AuthKeeper interface {

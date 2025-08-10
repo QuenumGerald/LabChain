@@ -7,6 +7,8 @@ import (
 	"cosmossdk.io/core/address"
 	corestore "cosmossdk.io/core/store"
 	"github.com/cosmos/cosmos-sdk/codec"
+	govkeeper "github.com/cosmos/cosmos-sdk/x/gov/keeper"
+	groupkeeper "github.com/cosmos/cosmos-sdk/x/group/keeper"
 
 	"labchain/x/milestones/types"
 )
@@ -23,8 +25,8 @@ type Keeper struct {
 	Params collections.Item[types.Params]
 
 	bankKeeper  types.BankKeeper
-	govKeeper   types.GovKeeper
-	groupKeeper types.GroupKeeper
+	govKeeper   *govkeeper.Keeper
+	groupKeeper groupkeeper.Keeper
 }
 
 func NewKeeper(
@@ -34,8 +36,8 @@ func NewKeeper(
 	authority []byte,
 
 	bankKeeper types.BankKeeper,
-	govKeeper types.GovKeeper,
-	groupKeeper types.GroupKeeper,
+	govKeeper *govkeeper.Keeper,
+	groupKeeper groupkeeper.Keeper,
 ) Keeper {
 	if _, err := addressCodec.BytesToString(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address %s: %s", authority, err))
