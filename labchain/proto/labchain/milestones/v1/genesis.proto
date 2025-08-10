@@ -1,0 +1,17 @@
+syntax = "proto3";
+package labchain.milestones.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "labchain/milestones/v1/params.proto";
+
+option go_package = "labchain/x/milestones/types";
+
+// GenesisState defines the milestones module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}

@@ -35,7 +35,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
 	govkeeper "github.com/cosmos/cosmos-sdk/x/gov/keeper"
-	"github.com/cosmos/cosmos-sdk/x/group"
+	groupkeeper "github.com/cosmos/cosmos-sdk/x/group/keeper"
 	mintkeeper "github.com/cosmos/cosmos-sdk/x/mint/keeper"
 	paramskeeper "github.com/cosmos/cosmos-sdk/x/params/keeper"
 	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
@@ -48,6 +48,7 @@ import (
 
 	"labchain/docs"
 	labchainmodulekeeper "labchain/x/labchain/keeper"
+	milestonesmodulekeeper "labchain/x/milestones/keeper"
 )
 
 const (
@@ -87,7 +88,7 @@ type App struct {
 	MintKeeper            mintkeeper.Keeper
 	DistrKeeper           distrkeeper.Keeper
 	GovKeeper             *govkeeper.Keeper
-	GroupKeeper           group.Keeper
+	GroupKeeper           groupkeeper.Keeper
 	UpgradeKeeper         *upgradekeeper.Keeper
 	AuthzKeeper           authzkeeper.Keeper
 	ConsensusParamsKeeper consensuskeeper.Keeper
@@ -100,7 +101,8 @@ type App struct {
 	ICAHostKeeper       icahostkeeper.Keeper
 	TransferKeeper      ibctransferkeeper.Keeper
 
-	LabchainKeeper labchainmodulekeeper.Keeper
+	LabchainKeeper   labchainmodulekeeper.Keeper
+	MilestonesKeeper milestonesmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -182,6 +184,7 @@ func New(
 		&app.CircuitBreakerKeeper,
 		&app.ParamsKeeper,
 		&app.LabchainKeeper,
+		&app.MilestonesKeeper,
 	); err != nil {
 		panic(err)
 	}

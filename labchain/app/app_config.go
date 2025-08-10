@@ -3,6 +3,8 @@ package app
 import (
 	_ "labchain/x/labchain/module"
 	labchainmoduletypes "labchain/x/labchain/types"
+	_ "labchain/x/milestones/module"
+	milestonesmoduletypes "labchain/x/milestones/types"
 	"time"
 
 	runtimev1alpha1 "cosmossdk.io/api/cosmos/app/runtime/v1alpha1"
@@ -83,6 +85,7 @@ var (
 		{Account: nft.ModuleName},
 		{Account: ibctransfertypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner}},
 		{Account: icatypes.ModuleName},
+		{Account: milestonesmoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner, authtypes.Staking}},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 
@@ -127,6 +130,7 @@ var (
 						ibcexported.ModuleName,
 						// chain modules
 						labchainmoduletypes.ModuleName,
+						milestonesmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/beginBlockers
 					},
 					EndBlockers: []string{
@@ -136,6 +140,7 @@ var (
 						group.ModuleName,
 						// chain modules
 						labchainmoduletypes.ModuleName,
+						milestonesmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/endBlockers
 					},
 					// The following is mostly only needed when ModuleName != StoreKey name.
@@ -173,6 +178,7 @@ var (
 						icatypes.ModuleName,
 						// chain modules
 						labchainmoduletypes.ModuleName,
+						milestonesmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/initGenesis
 					},
 				}),
@@ -272,6 +278,10 @@ var (
 			{
 				Name:   labchainmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&labchainmoduletypes.Module{}),
+			},
+			{
+				Name:   milestonesmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&milestonesmoduletypes.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},
