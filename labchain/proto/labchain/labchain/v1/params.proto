@@ -1,0 +1,13 @@
+syntax = "proto3";
+package labchain.labchain.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "labchain/x/labchain/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "labchain/x/labchain/Params";
+  option (gogoproto.equal) = true;
+}
