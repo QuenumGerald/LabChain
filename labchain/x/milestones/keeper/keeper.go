@@ -26,7 +26,7 @@ type Keeper struct {
 
 	bankKeeper  types.BankKeeper
 	govKeeper   *govkeeper.Keeper
-	groupKeeper groupkeeper.Keeper
+	groupKeeper *groupkeeper.Keeper
 }
 
 func NewKeeper(
@@ -37,7 +37,7 @@ func NewKeeper(
 
 	bankKeeper types.BankKeeper,
 	govKeeper *govkeeper.Keeper,
-	groupKeeper groupkeeper.Keeper,
+	groupKeeper *groupkeeper.Keeper,
 ) Keeper {
 	if _, err := addressCodec.BytesToString(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address %s: %s", authority, err))
