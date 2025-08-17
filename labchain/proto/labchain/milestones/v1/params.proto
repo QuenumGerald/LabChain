@@ -3,6 +3,7 @@ package labchain.milestones.v1;
 
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
 
 option go_package = "labchain/x/milestones/types";
 
@@ -10,4 +11,10 @@ option go_package = "labchain/x/milestones/types";
 message Params {
   option (amino.name) = "labchain/x/milestones/Params";
   option (gogoproto.equal) = true;
+
+  // address holding the treasury funds used for tranche releases
+  string treasury_address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // default tranche amount to release per milestone (string sdk.Coin)
+  string tranche_amount = 2;
 }

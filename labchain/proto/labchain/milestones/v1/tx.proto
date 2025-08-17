@@ -16,6 +16,18 @@ service Msg {
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
   rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // Submit a new project
+  rpc SubmitProject(MsgSubmitProject) returns (MsgSubmitProjectResponse);
+
+  // Vote on a project (support = true/false)
+  rpc VoteProject(MsgVoteProject) returns (MsgVoteProjectResponse);
+
+  // Attest a milestone with an IPFS hash
+  rpc AttestMilestone(MsgAttestMilestone) returns (MsgAttestMilestoneResponse);
+
+  // Release next tranche to project owner
+  rpc ReleaseTranche(MsgReleaseTranche) returns (MsgReleaseTrancheResponse);
 }
 
 // MsgUpdateParams is the Msg/UpdateParams request type.
@@ -38,3 +50,51 @@ message MsgUpdateParams {
 // MsgUpdateParamsResponse defines the response structure for executing a
 // MsgUpdateParams message.
 message MsgUpdateParamsResponse {}
+
+// Business messages
+
+message MsgSubmitProject {
+  option (cosmos.msg.v1.signer) = "creator";
+  option (amino.name) = "labchain/x/milestones/MsgSubmitProject";
+
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string title = 2;
+  string budget = 3; // sdk.Coin as string for simplicity in proto
+  string ipfs_hash = 4;
+}
+
+message MsgSubmitProjectResponse {
+  uint64 project_id = 1;
+}
+
+message MsgVoteProject {
+  option (cosmos.msg.v1.signer) = "voter";
+  option (amino.name) = "labchain/x/milestones/MsgVoteProject";
+
+  string voter = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  uint64 project_id = 2;
+  bool support = 3;
+}
+
+message MsgVoteProjectResponse {}
+
+message MsgAttestMilestone {
+  option (cosmos.msg.v1.signer) = "attester";
+  option (amino.name) = "labchain/x/milestones/MsgAttestMilestone";
+
+  string attester = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  uint64 project_id = 2;
+  string milestone_hash = 3;
+}
+
+message MsgAttestMilestoneResponse {}
+
+message MsgReleaseTranche {
+  option (cosmos.msg.v1.signer) = "executor";
+  option (amino.name) = "labchain/x/milestones/MsgReleaseTranche";
+
+  string executor = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  uint64 project_id = 2;
+}
+
+message MsgReleaseTrancheResponse {}
